@@ -50,3 +50,27 @@ PUT Endpoint-v1/user/self
 Test 1 - Created an account, and using the GET call, validated account exists.
 Test 2 - Updated the account and using the GET call, validated the account was updated.
 
+## Packer & Custom Images - Building Custom Application Images using Packer
+Created custom application images for deployment in Google Cloud Platform (GCP) using Packer. These custom images are tailored to include all necessary dependencies and configurations required to run our application.
+
+### Packer Pre-requisites
+1. Install Packer on MacOS:
+> brew tap hashicorp/tap
+> brew install hashicorp/tap/packer
+2. Install packer plugins
+> packer plugins install github.com/hashicorp/googlecompute
+3. Create new project in gcp and enable Compute Engine API
+4. Create a custom service account for Packer and assign it Compute Instance Admin (v1) & Service Account User roles.
+5. Add above GCP Credentials, DB Username, url and password in github repo secrets  
+6. Provide project id in main packer file 
+
+### Custom Image Implementation
+1. Source Image: Centos Stream 8
+2. Local Installation: MySQL is installed in the custom image.
+3. Application Inclusion: Custom images includes everything needed to run web application and the application binary itself.
+4. Created a local user csye6225 with primary group csye6225. This user will not have a login shell. Ensured that the application artifacts and configurations are owned by user csye6225 and group csye6225.
+5. Added the systemd service file to /etc/systemd/system and configured it to start the service when the instance is launched.
+
+
+
+
